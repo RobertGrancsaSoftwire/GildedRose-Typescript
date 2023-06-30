@@ -10,6 +10,13 @@ export class Item {
     }
 }
 
+enum ItemNames {
+    Sulfuras = 'Sulfuras, Hand of Ragnaros',
+    AgedBrie = 'Aged Brie',
+    BackstagePasses = 'Backstage passes to a TAFKAL80ETC concert',
+    ManaCake = 'Conjured Mana Cake'
+}
+
 export class GildedRose {
     items: Array<Item>;
 
@@ -21,12 +28,12 @@ export class GildedRose {
         for (let i = 0; i < this.items.length; i++) {
             let itemName = this.items[i].name;
             switch (itemName) {
-                case 'Sulfuras, Hand of Ragnaros':
+                case ItemNames.Sulfuras:
                     continue;
-                case 'Aged Brie':
+                case ItemNames.AgedBrie:
                     this.items[i].quality = Math.min(this.items[i].quality + 1, 50);
                     break;
-                case 'Backstage passes to a TAFKAL80ETC concert':
+                case ItemNames.BackstagePasses:
                     if (this.items[i].sellIn < 6) {
                         this.items[i].quality = Math.min(this.items[i].quality + 3, 50);
                     } else if (this.items[i].sellIn < 11) {
@@ -36,7 +43,7 @@ export class GildedRose {
                     }
 
                     break;
-                case 'Conjured Mana Cake':
+                case ItemNames.ManaCake:
                     this.items[i].quality = Math.max(this.items[i].quality - 2, 0);
                     break;
                 default:
@@ -46,12 +53,11 @@ export class GildedRose {
             this.items[i].sellIn--;
 
             if (this.items[i].sellIn < 0) {
-                if (itemName == 'Backstage passes to a TAFKAL80ETC concert') {
+                if (itemName === ItemNames.BackstagePasses) {
                     this.items[i].quality = 0;
-                } else if (itemName == 'Conjured Mana Cake') {
+                } else if (itemName === ItemNames.ManaCake) {
                     this.items[i].quality = Math.max(this.items[i].quality - 2, 0);
-
-                } else if (itemName == 'Aged Brie') {
+                } else if (itemName === ItemNames.AgedBrie) {
                     this.items[i].quality = Math.min(this.items[i].quality + 1, 50);
                 } else {
                     this.items[i].quality = Math.max(this.items[i].quality - 1, 0);
